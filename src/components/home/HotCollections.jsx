@@ -3,19 +3,32 @@ import { Link } from "react-router-dom";
 import AuthorImage from "../../images/author_thumbnail.jpg";
 import nftImage from "../../images/nftImage.jpg";
 import axios from "axios";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import OwlCarousel from "react-owl-carousel";
+import "owl.carousel/dist/assets/owl.carousel.css";
+import "owl.carousel/dist/assets/owl.theme.default.css";
 
 const HotCollections = () => {
   const [hotCollections, setHotCollections] = useState([]);
-  const settings = {
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    speed: 300,
-    arrows: true,
-    lazyLoad: true,
-    mobileFirst: true,
+  const options = {
+    items: 4,
+    margin: 24,
+    loop: true,
+    nav: true,
+    responsiveClass: true,
+    responsive: {
+      0: {
+        items: 1,
+      },
+      428: {
+        items: 2,
+      },
+      768: {
+        items: 3,
+      },
+      980: {
+        items: 4,
+      },
+    },
   };
 
   async function fetchHotCollections() {
@@ -39,9 +52,9 @@ const HotCollections = () => {
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
-          <Slider {...settings}>
-            {hotCollections?.length > 0 &&
-              hotCollections?.map((hotCollection) => (
+          {hotCollections?.length > 0 && (
+            <OwlCarousel className="owl-carousel" {...options}>
+              {hotCollections?.map((hotCollection) => (
                 <div
                   // className="col-lg-3 col-md-6 col-sm-6 col-xs-12"
                   className="collection"
@@ -76,7 +89,8 @@ const HotCollections = () => {
                   </div>
                 </div>
               ))}
-          </Slider>
+            </OwlCarousel>
+          )}
         </div>
       </div>
     </section>
