@@ -1,0 +1,43 @@
+/* Slick Styles */
+
+.slick-slider {
+    position: static;
+}
+
+.slick-track {
+    display: flex;
+    gap: 24px;
+}
+
+.slick-prev {
+    left: 0px;
+    z-index: 100;
+}
+
+.slick-next {
+    right: 20px;
+}
+
+
+.slick-prev:before,
+.slick-next:before {
+    font-size: 40px;
+    opacity: 1;
+    color: black;
+}
+
+.slick-prev:hover:before,
+.slick-next:hover:before {
+    transform: scale(1.2);
+}
+
+.slider-container {
+    position: relative;
+    padding: 0 48px;
+}
+
+@media (max-width: 576px) {
+    .slider-container {
+        padding: 0;
+    }
+}
