@@ -1,0 +1,57 @@
+/* SLICK STYLES */
+
+.slick-slider {
+  position: static;
+}
+
+.slick-track {
+  display: flex;
+  overflow: hidden;
+  gap: 24px;
+}
+
+.slider-container {
+  position: relative;
+  padding: 0;
+}
+
+/* CUSTOM ARROWS */
+
+.custom-arrow {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  border: 1px solid #777;
+  border-radius: 100%;
+  background-color: #fff;
+  z-index: 100;
+  transition: transform 300ms ease;
+}
+
+.prev {
+  top: 50%;
+  left: -2px;
+  transform: translateY(-2%);
+}
+
+.next {
+  top: 50%;
+  right: -5px;
+  transform: translateY(-2%);
+}
+
+.custom-arrow:hover {
+  transform: translateY(-2%) scale(1.1);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 576px) {
+  .slider-container {
+    padding: 0;
+  }
+}

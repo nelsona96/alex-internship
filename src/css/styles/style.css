@@ -13246,7 +13246,7 @@ a.read_more i {
   width: 60px;
   display: block;
   margin: 0 auto;
-  margin-top: -30px;
+  margin-top: -46px;
   margin-bottom: 10px;
   position: relative;
 }
@@ -16676,6 +16676,11 @@ img {
   animation: shimmer 2s infinite;
   content: "";
 }
+
+.skeleton--lighter {
+  background-color: #e3e3e3;
+}
+
 @-webkit-keyframes shimmer {
   100% {
     transform: translateX(100%);
