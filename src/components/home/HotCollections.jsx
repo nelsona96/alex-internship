@@ -6,25 +6,24 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../../css/styles/slick-styles.css";
 import Skeleton from "../UI/Skeleton";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const HotCollections = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const sliderRef = useRef(null);
 
   const settings = {
     dots: false,
     infinite: true,
-    speed: 200,
+    speed: 300,
     cssEase: "linear",
     slidesToShow: 4,
     slidesToScroll: 1,
-    arrows: true,
     waitForAnimate: false,
     swipeToSlide: true,
-    centerMode: true,
-    centerPadding: "0px",
+    prevArrow: <PrevArrow />,
+    nextArrow: <NextArrow />,
     responsive: [
       {
         breakpoint: 980,
@@ -62,7 +61,6 @@ const HotCollections = () => {
           "https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections"
         );
         setData(response.data);
-        console.log(response.data);
       } catch (error) {
         setError(error);
       } finally {
@@ -72,6 +70,22 @@ const HotCollections = () => {
 
     fetchHotCollections();
   }, []);
+
+  function PrevArrow(props) {
+    return (
+      <button className="custom-arrow prev" onClick={props.onClick}>
+        <IoIosArrowBack />
+      </button>
+    );
+  }
+
+  function NextArrow(props) {
+    return (
+      <button className="custom-arrow next" onClick={props.onClick}>
+        <IoIosArrowForward />
+      </button>
+    );
+  }
 
   return (
     <section id="section-collections" className="no-bottom">
@@ -86,73 +100,73 @@ const HotCollections = () => {
           {error ? (
             <div className="text-center">Error: {error.message}</div>
           ) : (
-            <div className="slider-container">
-              <Slider {...settings}>
-                {loading
-                  ? [...Array(6)].map((_, index) => (
-                      <div className="collection-card" key={index}>
-                        <div className="nft_coll">
-                          <div className="nft_wrap">
-                            <Skeleton
-                              width="100%"
-                              height="auto"
-                              aspectRatio="16 / 9"
-                            />
-                          </div>
-                          <div className="nft_coll_pp">
-                            <Skeleton
-                              width="54px"
-                              height="54px"
-                              borderRadius="100%"
-                              lighter
-                            />
-                            <i className="fa fa-check"></i>
-                          </div>
-                          <div className="nft_coll_info d-flex flex-column align-items-center">
-                            <Skeleton
-                              width="84px"
-                              borderRadius="4px"
-                              marginTop="2px"
-                              marginBottom="10px"
-                            />
-                            <Skeleton width="64px" borderRadius="4px" />
+              <div className="slider-container">
+                <Slider {...settings}>
+                  {loading
+                    ? [...Array(6)].map((_, index) => (
+                        <div className="collection-card" key={index}>
+                          <div className="nft_coll">
+                            <div className="nft_wrap">
+                              <Skeleton
+                                width="100%"
+                                height="auto"
+                                aspectRatio="16 / 9"
+                              />
+                            </div>
+                            <div className="nft_coll_pp">
+                              <Skeleton
+                                width="54px"
+                                height="54px"
+                                borderRadius="100%"
+                                lighter
+                              />
+                              <i className="fa fa-check"></i>
+                            </div>
+                            <div className="nft_coll_info d-flex flex-column align-items-center">
+                              <Skeleton
+                                width="84px"
+                                borderRadius="4px"
+                                marginTop="2px"
+                                marginBottom="10px"
+                              />
+                              <Skeleton width="64px" borderRadius="4px" />
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))
-                  : data?.map((item) => (
-                      <div className="collection-card" key={item.id}>
-                        <div className="nft_coll">
-                          <div className="nft_wrap">
-                            <Link to="/item-details">
-                              <img
-                                src={item.nftImage}
-                                className="lazy img-fluid"
-                                alt=""
-                              />
-                            </Link>
-                          </div>
-                          <div className="nft_coll_pp">
-                            <Link to="/author">
-                              <img
-                                className="lazy pp-coll"
-                                src={item.authorImage}
-                                alt=""
-                              />
-                            </Link>
-                            <i className="fa fa-check"></i>
-                          </div>
-                          <div className="nft_coll_info">
-                            <Link to="/explore">
-                              <h4>{item.title}</h4>
-                            </Link>
-                            <span>ERC-{item.code}</span>
+                      ))
+                    : data?.map((item) => (
+                        <div className="collection-card" key={item.id}>
+                          <div className="nft_coll">
+                            <div className="nft_wrap">
+                              <Link to="/item-details">
+                                <img
+                                  src={item.nftImage}
+                                  className="lazy img-fluid"
+                                  alt=""
+                                />
+                              </Link>
+                            </div>
+                            <div className="nft_coll_pp">
+                              <Link to="/author">
+                                <img
+                                  className="lazy pp-coll"
+                                  src={item.authorImage}
+                                  alt=""
+                                />
+                              </Link>
+                              <i className="fa fa-check"></i>
+                            </div>
+                            <div className="nft_coll_info">
+                              <Link to="/explore">
+                                <h4>{item.title}</h4>
+                              </Link>
+                              <span>ERC-{item.code}</span>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
-              </Slider>
-            </div>
+                      ))}
+                </Slider>
+              </div>
           )}
         </div>
       </div>
