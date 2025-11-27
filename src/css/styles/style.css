@@ -13810,7 +13810,7 @@ a.read_more i {
   background: rgba(255, 255, 255, 0.8);
   border-radius: 5px;
   left: 0;
-  display: table;
+  display: none; /* was set to 'table', temp put to none so it won't show on initial mount */
   transform: scale(1.03);
   -moz-backdrop-filter: saturate(180%) blur(6px);
   -webkit-backdrop-filter: saturate(180%) blur(6px);
