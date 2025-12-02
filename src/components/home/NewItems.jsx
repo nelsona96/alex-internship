@@ -6,7 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "../../css/styles/slick-styles.css";
 import PrevArrow from "../UI/PrevArrow";
 import NextArrow from "../UI/NextArrow";
-import NewItem from "../UI/NewItem";
+import ItemCard from "../UI/ItemCard";
 
 const NewItems = () => {
   const [data, setData] = useState(null);
@@ -87,10 +87,10 @@ const NewItems = () => {
               <Slider {...settings}>
                 {loading
                   ? [...Array(7)].map((_, index) => (
-                      <NewItem key={index} loading={loading} />
+                      <ItemCard key={index} loading={loading} />
                     ))
                   : data?.map((item) => (
-                      <NewItem key={item.id} item={item} loading={loading} />
+                      <ItemCard key={item.id} item={item} loading={loading} />
                     ))}
               </Slider>
             </div>
