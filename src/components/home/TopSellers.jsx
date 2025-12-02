@@ -1,8 +1,29 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import AuthorImage from "../../images/author_thumbnail.jpg";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import TopSeller from "../UI/TopSeller";
 
 const TopSellers = () => {
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const url =
+    "https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers";
+
+  async function fetchData() {
+    try {
+      const response = await axios.get(url);
+      setData(response.data);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <section id="section-popular" className="pb-5">
       <div className="container">
@@ -14,26 +35,19 @@ const TopSellers = () => {
             </div>
           </div>
           <div className="col-md-12">
-            <ol className="author_list">
-              {new Array(12).fill(0).map((_, index) => (
-                <li key={index}>
-                  <div className="author_list_pp">
-                    <Link to="/author">
-                      <img
-                        className="lazy pp-author"
-                        src={AuthorImage}
-                        alt=""
-                      />
-                      <i className="fa fa-check"></i>
-                    </Link>
-                  </div>
-                  <div className="author_list_info">
-                    <Link to="/author">Monica Lucas</Link>
-                    <span>2.1 ETH</span>
-                  </div>
-                </li>
-              ))}
-            </ol>
+            {error ? (
+              <div className="text-center">Error: {error.message}</div>
+            ) : (
+              <ol className="author_list">
+                {loading
+                  ? [...Array(12)].map((_, index) => (
+                      <TopSeller key={index} loading={loading} />
+                    ))
+                  : data?.map((item) => (
+                      <TopSeller key={item.id} item={item} />
+                    ))}
+              </ol>
+            )}
           </div>
         </div>
       </div>
