@@ -4,7 +4,8 @@ import axios from "axios";
 import NewItem from "../UI/ItemCard";
 
 const ExploreItems = () => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
+  const [visibleCount, setvisibleCount] = useState(8);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const url =
@@ -25,6 +26,10 @@ const ExploreItems = () => {
     fetchData();
   }, []);
 
+  function loadMore() {
+    setvisibleCount((prev) => Math.min(prev + 4, data?.length));
+  }
+
   return (
     <>
       <div>
@@ -40,13 +45,23 @@ const ExploreItems = () => {
         ? [...Array(8)].map((_, index) => (
             <NewItem key={index} loading={loading} explore />
           ))
-        : data?.map((item) => <NewItem key={item.id} item={item} explore />)}
+        : data
+            .slice(0, visibleCount)
+            ?.map((item) => <NewItem key={item.id} item={item} explore />)}
 
-      <div className="col-md-12 text-center">
-        <Link to="" id="loadmore" className="btn-main lead">
-          Load more
-        </Link>
-      </div>
+      {loading ||
+        (visibleCount < data?.length && (
+          <div className="col-md-12 text-center">
+            <Link
+              to=""
+              id="loadmore"
+              className="btn-main lead"
+              onClick={loadMore}
+            >
+              Load more
+            </Link>
+          </div>
+        ))}
     </>
   );
 };
