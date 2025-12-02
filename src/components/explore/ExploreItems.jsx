@@ -6,12 +6,15 @@ import NewItem from "../UI/ItemCard";
 const ExploreItems = () => {
   const [data, setData] = useState([]);
   const [visibleCount, setvisibleCount] = useState(8);
+  const [currentFilter, setCurrentFilter] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const url =
-    "https://us-central1-nft-cloud-functions.cloudfunctions.net/explore";
+  const url = currentFilter
+    ? `https://us-central1-nft-cloud-functions.cloudfunctions.net/explore?filter=${currentFilter}`
+    : `https://us-central1-nft-cloud-functions.cloudfunctions.net/explore`;
 
   async function fetchData() {
+    setLoading(true);
     try {
       const response = await axios.get(url);
       setData(response.data);
@@ -24,7 +27,7 @@ const ExploreItems = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [currentFilter]);
 
   function loadMore() {
     setvisibleCount((prev) => Math.min(prev + 4, data?.length));
@@ -33,7 +36,11 @@ const ExploreItems = () => {
   return (
     <>
       <div>
-        <select id="filter-items" defaultValue="">
+        <select
+          id="filter-items"
+          defaultValue=""
+          onChange={(event) => setCurrentFilter(event.target.value)}
+        >
           <option value="">Default</option>
           <option value="price_low_to_high">Price, Low to High</option>
           <option value="price_high_to_low">Price, High to Low</option>
@@ -41,13 +48,17 @@ const ExploreItems = () => {
         </select>
       </div>
 
-      {loading
-        ? [...Array(8)].map((_, index) => (
-            <NewItem key={index} loading={loading} explore />
-          ))
-        : data
-            .slice(0, visibleCount)
-            ?.map((item) => <NewItem key={item.id} item={item} explore />)}
+      {error ? (
+        <p className="text-center">Error: {error.message}</p>
+      ) : loading ? (
+        [...Array(visibleCount)].map((_, index) => (
+          <NewItem key={index} loading={loading} explore />
+        ))
+      ) : (
+        data
+          .slice(0, visibleCount)
+          ?.map((item) => <NewItem key={item.id} item={item} explore />)
+      )}
 
       {loading ||
         (visibleCount < data?.length && (
