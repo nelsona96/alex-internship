@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AuthorBanner from "../images/author_banner.jpg";
 import AuthorItems from "../components/author/AuthorItems";
-import { Link, useParams } from "react-router-dom";
-import AuthorImage from "../images/author_thumbnail.jpg";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import Skeleton from "../components/UI/Skeleton";
 
@@ -10,6 +9,8 @@ const Author = () => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [followers, setFollowers] = useState(0);
+  const [following, setFollowing] = useState(false);
   const { authorId } = useParams();
   const url = `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${authorId}`;
 
@@ -17,6 +18,7 @@ const Author = () => {
     try {
       const response = await axios.get(url);
       setData(response.data);
+      setFollowers(response.data.followers);
     } catch (error) {
       setError(error);
     } finally {
@@ -27,6 +29,16 @@ const Author = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  function handleClick() {
+    if (following) {
+      setFollowing(false);
+      setFollowers(data?.followers);
+    } else {
+      setFollowing(true);
+      setFollowers((prev) => prev + 1);
+    }
+  }
 
   return (
     <div id="wrapper">
@@ -104,15 +116,19 @@ const Author = () => {
                   <div className="profile_follow de-flex">
                     <div className="de-flex-col">
                       {loading ? (
-                        <Skeleton width="150px" height="40px" borderRadius="4px" />
+                        <Skeleton
+                          width="150px"
+                          height="40px"
+                          borderRadius="4px"
+                        />
                       ) : (
                         <>
                           <div className="profile_follower">
-                            {data?.followers?.toLocaleString()} followers
+                            {followers.toLocaleString()} followers
                           </div>
-                          <Link to="#" className="btn-main">
-                            Follow
-                          </Link>
+                          <button className="btn-main" onClick={handleClick}>
+                            {following ? "Unfollow" : "Follow"}
+                          </button>
                         </>
                       )}
                     </div>
