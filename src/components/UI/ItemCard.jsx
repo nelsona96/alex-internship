@@ -2,11 +2,17 @@ import { Link } from "react-router-dom";
 import Skeleton from "./Skeleton.jsx";
 import Countdown from "./Countdown.jsx";
 
-export default function ItemCard({ item, loading, explore }) {
+export default function ItemCard({
+  item,
+  authorImage,
+  authorId,
+  loading,
+  grid,
+}) {
   return loading ? (
     <div
       className={
-        explore ? "d-item col-lg-3 col-md-6 col-sm-6 col-xs-12" : "d-item"
+        grid ? "d-item col-lg-3 col-md-6 col-sm-6 col-xs-12" : "d-item"
       }
       style={{ display: "block", backgroundSize: "cover" }}
     >
@@ -60,19 +66,23 @@ export default function ItemCard({ item, loading, explore }) {
   ) : (
     <div
       className={
-        explore ? "d-item col-lg-3 col-md-6 col-sm-6 col-xs-12" : "d-item"
+        grid ? "d-item col-lg-3 col-md-6 col-sm-6 col-xs-12" : "d-item"
       }
       style={{ display: "block", backgroundSize: "cover" }}
     >
       <div className="nft__item">
         <div className="author_list_pp">
           <Link
-            to={`/author/${item.authorId}`}
+            to={`/author/${item?.authorId || authorId}`}
             data-bs-toggle="tooltip"
             data-bs-placement="top"
             title={item?.title}
           >
-            <img className="lazy" src={item?.authorImage} alt="" />
+            <img
+              className="lazy"
+              src={item?.authorImage || authorImage}
+              alt=""
+            />
             <i className="fa fa-check"></i>
           </Link>
         </div>
@@ -98,7 +108,7 @@ export default function ItemCard({ item, loading, explore }) {
             </div>
           </div>
 
-          <Link to={`/item-details/${item.nftId}`}>
+          <Link to={`/item-details/${item?.nftId}`}>
             <img
               src={item?.nftImage}
               className="lazy nft__item_preview"
@@ -107,7 +117,7 @@ export default function ItemCard({ item, loading, explore }) {
           </Link>
         </div>
         <div className="nft__item_info">
-          <Link to={`/item-details/${item.nftId}`}>
+          <Link to={`/item-details/${item?.nftId}`}>
             <h4>{item?.title}</h4>
           </Link>
           <div className="nft__item_price">{item?.price} ETH</div>
