@@ -52,12 +52,12 @@ const ExploreItems = () => {
         <p className="text-center">Error: {error.message}</p>
       ) : loading ? (
         [...Array(visibleCount)].map((_, index) => (
-          <NewItem key={index} loading={loading} explore />
+          <NewItem key={index} loading={loading} grid />
         ))
       ) : (
         data
           .slice(0, visibleCount)
-          ?.map((item) => <NewItem key={item.id} item={item} explore />)
+          ?.map((item) => <NewItem key={item.id} item={item} grid />)
       )}
 
       {loading ||
