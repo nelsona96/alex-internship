@@ -100,73 +100,73 @@ const HotCollections = () => {
           {error ? (
             <div className="text-center">Error: {error.message}</div>
           ) : (
-              <div className="slider-container">
-                <Slider {...settings}>
-                  {loading
-                    ? [...Array(6)].map((_, index) => (
-                        <div className="collection-card" key={index}>
-                          <div className="nft_coll">
-                            <div className="nft_wrap">
-                              <Skeleton
-                                width="100%"
-                                height="auto"
-                                aspectRatio="16 / 9"
-                              />
-                            </div>
-                            <div className="nft_coll_pp">
-                              <Skeleton
-                                width="54px"
-                                height="54px"
-                                borderRadius="100%"
-                                lighter
-                              />
-                              <i className="fa fa-check"></i>
-                            </div>
-                            <div className="nft_coll_info d-flex flex-column align-items-center">
-                              <Skeleton
-                                width="84px"
-                                borderRadius="4px"
-                                marginTop="2px"
-                                marginBottom="10px"
-                              />
-                              <Skeleton width="64px" borderRadius="4px" />
-                            </div>
+            <div className="slider-container">
+              <Slider {...settings}>
+                {loading
+                  ? [...Array(6)].map((_, index) => (
+                      <div className="collection-card" key={index}>
+                        <div className="nft_coll">
+                          <div className="nft_wrap">
+                            <Skeleton
+                              width="100%"
+                              height="auto"
+                              aspectRatio="16 / 9"
+                            />
+                          </div>
+                          <div className="nft_coll_pp">
+                            <Skeleton
+                              width="54px"
+                              height="54px"
+                              borderRadius="100%"
+                              lighter
+                            />
+                            <i className="fa fa-check"></i>
+                          </div>
+                          <div className="nft_coll_info d-flex flex-column align-items-center">
+                            <Skeleton
+                              width="84px"
+                              borderRadius="4px"
+                              marginTop="2px"
+                              marginBottom="10px"
+                            />
+                            <Skeleton width="64px" borderRadius="4px" />
                           </div>
                         </div>
-                      ))
-                    : data?.map((item) => (
-                        <div className="collection-card" key={item.id}>
-                          <div className="nft_coll">
-                            <div className="nft_wrap">
-                              <Link to="/item-details">
-                                <img
-                                  src={item.nftImage}
-                                  className="lazy img-fluid"
-                                  alt=""
-                                />
-                              </Link>
-                            </div>
-                            <div className="nft_coll_pp">
-                              <Link to={`/author/${item?.authorId}`}>
-                                <img
-                                  className="lazy pp-coll"
-                                  src={item.authorImage}
-                                  alt=""
-                                />
-                              </Link>
-                              <i className="fa fa-check"></i>
-                            </div>
-                            <div className="nft_coll_info">
-                              <Link to="/explore">
-                                <h4>{item.title}</h4>
-                              </Link>
-                              <span>ERC-{item.code}</span>
-                            </div>
+                      </div>
+                    ))
+                  : data?.map((item) => (
+                      <div className="collection-card" key={item.id}>
+                        <div className="nft_coll">
+                          <div className="nft_wrap">
+                            <Link to={`/item-details/${item?.nftId}`}>
+                              <img
+                                src={item.nftImage}
+                                className="lazy img-fluid"
+                                alt=""
+                              />
+                            </Link>
+                          </div>
+                          <div className="nft_coll_pp">
+                            <Link to={`/author/${item?.authorId}`}>
+                              <img
+                                className="lazy pp-coll"
+                                src={item.authorImage}
+                                alt=""
+                              />
+                            </Link>
+                            <i className="fa fa-check"></i>
+                          </div>
+                          <div className="nft_coll_info">
+                            <Link to="/explore">
+                              <h4>{item.title}</h4>
+                            </Link>
+                            <span>ERC-{item.code}</span>
                           </div>
                         </div>
-                      ))}
-                </Slider>
-              </div>
+                      </div>
+                    ))}
+              </Slider>
+            </div>
           )}
         </div>
       </div>
