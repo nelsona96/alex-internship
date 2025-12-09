@@ -100,7 +100,12 @@ const HotCollections = () => {
           {error ? (
             <div className="text-center">Error: {error.message}</div>
           ) : (
-            <div className="slider-container">
+            <div
+              data-aos="fade-in"
+              data-aos-duration="300"
+              data-aos-easing="ease-in"
+              className="slider-container"
+            >
               <Slider {...settings}>
                 {loading
                   ? [...Array(6)].map((_, index) => (
