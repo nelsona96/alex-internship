@@ -34,7 +34,12 @@ const TopSellers = () => {
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
-          <div className="col-md-12">
+          <div
+            data-aos="fade-in"
+            data-aos-duration="300"
+            data-aos-easing="ease-in"
+            className="col-md-12"
+          >
             {error ? (
               <div className="text-center">Error: {error.message}</div>
             ) : (

@@ -1,8 +1,15 @@
 import React, { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+
+AOS.init({
+  once: true,
+  duration: 1000,
+});
 
 ReactDOM.render(
   <StrictMode>
